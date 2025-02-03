@@ -1,8 +1,8 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { mockData } from "../public/data/mockData";
 import { useCalculateCustomerTotalRewardsPoints } from "./utils/rewards";
-import RewardsTable from "./components/RewardsTable";
+import RewardsTable from "./components/rewardsTable";
 
 function App() {
   const [rewards, setRewards] = useState(null);

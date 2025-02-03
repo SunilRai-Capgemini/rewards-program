@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -21,6 +21,12 @@ import { styles } from "../styles/rewardsTableStyles";
 const RewardsTable = ({ rewards, transactions }) => {
   const [selectedCustomer, setSelectedCustomer] = useState("");
 
+  const transactionDetails = useMemo(() => {
+    return transactions?.filter(
+      (transaction) => transaction.customerName === selectedCustomer
+    );
+  }, [transactions, selectedCustomer]);
+
   return (
     <div style={styles.mainContainer}>
       <Container maxWidth="md" sx={styles.contentContainer}>
@@ -40,7 +46,7 @@ const RewardsTable = ({ rewards, transactions }) => {
             displayEmpty
             sx={styles.select}
           >
-            {Object.keys(rewards).map((customerName) => (
+            {Object.keys(rewards)?.map((customerName) => (
               <MenuItem
                 key={customerName}
                 value={customerName}
@@ -70,7 +76,7 @@ const RewardsTable = ({ rewards, transactions }) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {Object.entries(rewards[selectedCustomer].monthly).map(
+                      {Object.entries(rewards[selectedCustomer].monthly)?.map(
                         ([month, points]) => (
                           <TableRow key={month} sx={styles.tableRow}>
                             <TableCell component="th" scope="row">
@@ -113,22 +119,17 @@ const RewardsTable = ({ rewards, transactions }) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {transactions
-                        .filter(
-                          (transaction) =>
-                            transaction.customerName === selectedCustomer
-                        )
-                        .map((transaction) => (
-                          <TableRow key={transaction.id} sx={styles.tableRow}>
-                            <TableCell>{transaction.id}</TableCell>
-                            <TableCell>
-                              {new Date(transaction.date).toLocaleDateString()}
-                            </TableCell>
-                            <TableCell align="right">
-                              ${transaction.amount.toFixed(2)}
-                            </TableCell>
-                          </TableRow>
-                        ))}
+                      {transactionDetails?.map((transaction) => (
+                        <TableRow key={transaction.id} sx={styles.tableRow}>
+                          <TableCell>{transaction.id}</TableCell>
+                          <TableCell>
+                            {new Date(transaction.date).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell align="right">
+                            ${transaction.amount.toFixed(2)}
+                          </TableCell>
+                        </TableRow>
+                      ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
@@ -150,7 +151,7 @@ RewardsTable.propTypes = {
   ).isRequired,
   transactions: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       customerName: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
       amount: PropTypes.number.isRequired,
