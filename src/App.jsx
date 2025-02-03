@@ -1,30 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import "./App.css";
-import { mockData } from "./components/data/mockData";
-import { calculateCustomerTotalRewardsPoints } from "./components/utils/rewards";
+import { mockData } from "../public/data/mockData";
+import { useCalculateCustomerTotalRewardsPoints } from "./utils/rewards";
 import RewardsTable from "./components/RewardsTable";
 
 function App() {
-  const [rewards, setRewards] = useState({});
+  const [rewards, setRewards] = useState(null);
+  const [error, setError] = useState(null);
+  const calculateRewards = useCalculateCustomerTotalRewardsPoints();
 
   useEffect(() => {
     const fetchData = async () => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(mockData);
-        }, 1000);
-      });
+      try {
+        const response = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (!mockData) {
+              reject(new Error("Failed to fetch data"));
+            }
+            resolve(mockData);
+          }, 1000);
+        });
+
+        const customerRewards = calculateRewards(response);
+        setRewards(customerRewards);
+        setError(null);
+      } catch (error) {
+        console.error("Error fetching or processing data:", error);
+        setError("Failed to load rewards data. Please try again later.");
+        setRewards(null);
+      }
     };
 
-    fetchData().then((data) => {
-      const customerRewards = calculateCustomerTotalRewardsPoints(data);
-      setRewards(customerRewards);
-    });
-  }, []);
+    fetchData();
+  }, [calculateRewards]);
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
 
   return (
     <div>
-      {Object.keys(rewards).length === 0 ? (
+      {!rewards ? (
         <p>Loading rewards points...</p>
       ) : (
         <RewardsTable rewards={rewards} transactions={mockData} />

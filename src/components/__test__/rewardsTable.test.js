@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { render, screen, fireEvent } from "@testing-library/react";
-import RewardsTable from "./RewardsTable";
+import RewardsTable from "../RewardsTable";
 import "@testing-library/jest-dom";
 
 const mockRewards = {

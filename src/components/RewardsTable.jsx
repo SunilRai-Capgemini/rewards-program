@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
 import { useState } from "react";
 import {
   Table,
@@ -16,63 +16,19 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { styles } from "../styles/rewardsTableStyles";
 
 const RewardsTable = ({ rewards, transactions }) => {
   const [selectedCustomer, setSelectedCustomer] = useState("");
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "2rem 0",
-      }}
-    >
-      <Container
-        maxWidth="md"
-        sx={{
-          borderRadius: 4,
-          padding: "2rem",
-          background: "#000",
-          backdropFilter: "blur(4px)",
-          border: "1px solid rgba(0, 0, 0, 0.18)",
-        }}
-      >
-        <Typography
-          variant="h3"
-          component="h1"
-          sx={{
-            textAlign: "center",
-            fontWeight: 600,
-            background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            color: "transparent",
-            py: 4,
-            mb: 2,
-          }}
-        >
+    <div style={styles.mainContainer}>
+      <Container maxWidth="md" sx={styles.contentContainer}>
+        <Typography variant="h3" component="h1" sx={styles.headerText}>
           Customer Rewards Points
         </Typography>
-        <FormControl
-          fullWidth
-          sx={{
-            mb: 4,
-            "& .MuiOutlinedInput-root": {
-              "&:hover fieldset": {
-                borderColor: "#2196F3",
-              },
-            },
-          }}
-        >
-          <InputLabel
-            id="customer-select-label"
-            sx={{
-              color: "#fff",
-              "&.Mui-focused": {
-                color: "#2196F3",
-              },
-            }}
-          >
+        <FormControl fullWidth sx={styles.formControl}>
+          <InputLabel id="customer-select-label" sx={styles.inputLabel}>
             Select Customer
           </InputLabel>
           <Select
@@ -82,31 +38,13 @@ const RewardsTable = ({ rewards, transactions }) => {
             label="Select Customer"
             onChange={(e) => setSelectedCustomer(e.target.value)}
             displayEmpty
-            sx={{
-              color: "#fff",
-              ".MuiSelect-icon": {
-                color: "#fff",
-              },
-              "& .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(255, 255, 255, 0.5)",
-              },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#fff",
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#2196F3",
-              },
-            }}
+            sx={styles.select}
           >
             {Object.keys(rewards).map((customerName) => (
               <MenuItem
                 key={customerName}
                 value={customerName}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "#e3f2fd",
-                  },
-                }}
+                sx={styles.menuItem}
               >
                 {customerName}
               </MenuItem>
@@ -116,45 +54,17 @@ const RewardsTable = ({ rewards, transactions }) => {
 
         {selectedCustomer && (
           <>
-            <Card
-              elevation={3}
-              sx={{
-                mb: 4,
-                borderRadius: 2,
-                transition: "all 0.3s ease-in-out",
-                "&:hover": {
-                  transform: "translateY(-5px)",
-                  boxShadow: "0 12px 20px rgba(0,0,0,0.1)",
-                },
-              }}
-            >
+            <Card elevation={3} sx={styles.card}>
               <CardContent>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 600,
-                    mb: 2,
-                    color: "#2196F3",
-                  }}
-                >
+                <Typography variant="h5" sx={styles.cardTitle}>
                   Monthly Rewards Summary
                 </Typography>
                 <TableContainer>
                   <Table sx={{ minWidth: 650 }} aria-label="rewards table">
                     <TableHead>
-                      <TableRow
-                        sx={{
-                          background:
-                            "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
-                        }}
-                      >
-                        <TableCell sx={{ fontWeight: "bold", color: "white" }}>
-                          Month
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          sx={{ fontWeight: "bold", color: "white" }}
-                        >
+                      <TableRow sx={styles.tableHeader}>
+                        <TableCell sx={styles.tableHeaderCell}>Month</TableCell>
+                        <TableCell align="right" sx={styles.tableHeaderCell}>
                           Rewards Points
                         </TableCell>
                       </TableRow>
@@ -162,17 +72,7 @@ const RewardsTable = ({ rewards, transactions }) => {
                     <TableBody>
                       {Object.entries(rewards[selectedCustomer].monthly).map(
                         ([month, points]) => (
-                          <TableRow
-                            key={month}
-                            sx={{
-                              "&:nth-of-type(odd)": {
-                                backgroundColor: "rgba(245, 245, 245, 0.9)",
-                              },
-                              "&:hover": {
-                                backgroundColor: "#e3f2fd",
-                              },
-                            }}
-                          >
+                          <TableRow key={month} sx={styles.tableRow}>
                             <TableCell component="th" scope="row">
                               {month}
                             </TableCell>
@@ -180,11 +80,11 @@ const RewardsTable = ({ rewards, transactions }) => {
                           </TableRow>
                         )
                       )}
-                      <TableRow sx={{ backgroundColor: "#e3f2fd" }}>
-                        <TableCell sx={{ fontWeight: "bold" }}>
+                      <TableRow sx={styles.totalRow}>
+                        <TableCell sx={styles.totalCell}>
                           Total Rewards :
                         </TableCell>
-                        <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                        <TableCell align="right" sx={styles.totalCell}>
                           {rewards[selectedCustomer].total}
                         </TableCell>
                       </TableRow>
@@ -194,47 +94,20 @@ const RewardsTable = ({ rewards, transactions }) => {
               </CardContent>
             </Card>
 
-            <Card
-              elevation={3}
-              sx={{
-                borderRadius: 2,
-                transition: "all 0.3s ease-in-out",
-                "&:hover": {
-                  transform: "translateY(-5px)",
-                  boxShadow: "0 12px 20px rgba(0,0,0,0.1)",
-                },
-              }}
-            >
+            <Card elevation={3} sx={styles.card}>
               <CardContent>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 600,
-                    mb: 2,
-                    color: "#2196F3",
-                  }}
-                >
+                <Typography variant="h5" sx={styles.cardTitle}>
                   Transaction History
                 </Typography>
                 <TableContainer>
                   <Table sx={{ minWidth: 650 }} aria-label="transactions table">
                     <TableHead>
-                      <TableRow
-                        sx={{
-                          background:
-                            "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
-                        }}
-                      >
-                        <TableCell sx={{ fontWeight: "bold", color: "white" }}>
+                      <TableRow sx={styles.tableHeader}>
+                        <TableCell sx={styles.tableHeaderCell}>
                           Transaction ID
                         </TableCell>
-                        <TableCell sx={{ fontWeight: "bold", color: "white" }}>
-                          Date
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          sx={{ fontWeight: "bold", color: "white" }}
-                        >
+                        <TableCell sx={styles.tableHeaderCell}>Date</TableCell>
+                        <TableCell align="right" sx={styles.tableHeaderCell}>
                           Amount ($)
                         </TableCell>
                       </TableRow>
@@ -246,18 +119,7 @@ const RewardsTable = ({ rewards, transactions }) => {
                             transaction.customerName === selectedCustomer
                         )
                         .map((transaction) => (
-                          <TableRow
-                            key={transaction.id}
-                            sx={{
-                              "&:nth-of-type(odd)": {
-                                backgroundColor: "rgba(245, 245, 245, 0.9)",
-                              },
-                              "&:hover": {
-                                backgroundColor: "#e3f2fd",
-                              },
-                              transition: "background-color 0.2s ease",
-                            }}
-                          >
+                          <TableRow key={transaction.id} sx={styles.tableRow}>
                             <TableCell>{transaction.id}</TableCell>
                             <TableCell>
                               {new Date(transaction.date).toLocaleDateString()}
@@ -277,6 +139,23 @@ const RewardsTable = ({ rewards, transactions }) => {
       </Container>
     </div>
   );
+};
+
+RewardsTable.propTypes = {
+  rewards: PropTypes.objectOf(
+    PropTypes.shape({
+      monthly: PropTypes.objectOf(PropTypes.number).isRequired,
+      total: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      customerName: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      amount: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };
 
 export default RewardsTable;

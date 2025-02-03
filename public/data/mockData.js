@@ -28,16 +28,16 @@ export const mockData = [
     amount: 90,
     date: "2024-03-01",
   },
-    {
-      id: 6,
-      customerName: "Susan",
-      amount: 500,
-      date: "2024-01-01",
-    },
-    {
-      id: 7,
-      customerName: "Susan",
-      amount: 100,
-      date: "2024-02-01",
-    },
+  {
+    id: 6,
+    customerName: "Susan",
+    amount: 500,
+    date: "2024-01-01",
+  },
+  {
+    id: 7,
+    customerName: "Susan",
+    amount: 100,
+    date: "2024-02-01",
+  },
 ];

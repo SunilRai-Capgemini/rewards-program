@@ -3,7 +3,7 @@
 import {
   calculateCustomerTotalRewardsPoints,
   calculateRewardsPoints,
-} from "./rewards";
+} from "../rewards";
 
 describe("calculateRewardsPoints", () => {
   it("should return 0 points for amount less than or equal to $50", () => {
