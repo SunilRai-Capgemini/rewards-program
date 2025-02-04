@@ -10,8 +10,9 @@ export const mockData = [
     customerName: "John",
     amount: 75,
     date: "2024-02-01",
-  },{
-    id:3,
+  },
+  {
+    id: 3,
     customerName: "Bobby",
     amount: 200,
     date: "2024-01-05",

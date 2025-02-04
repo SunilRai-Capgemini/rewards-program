@@ -17,6 +17,7 @@ import {
   CardContent,
 } from "@mui/material";
 import { styles } from "../styles/rewardsTableStyles";
+import { TABLE_LABELS } from "../constants/tableConstants";
 
 const RewardsTable = ({ rewards, transactions }) => {
   const [selectedCustomer, setSelectedCustomer] = useState("");
@@ -31,17 +32,17 @@ const RewardsTable = ({ rewards, transactions }) => {
     <div style={styles.mainContainer}>
       <Container maxWidth="md" sx={styles.contentContainer}>
         <Typography variant="h3" component="h1" sx={styles.headerText}>
-          Customer Rewards Points
+          {TABLE_LABELS.HEADER}
         </Typography>
         <FormControl fullWidth sx={styles.formControl}>
           <InputLabel id="customer-select-label" sx={styles.inputLabel}>
-            Select Customer
+            {TABLE_LABELS.CUSTOMER_SELECT}
           </InputLabel>
           <Select
             labelId="customer-select-label"
             id="customer-select"
             value={selectedCustomer}
-            label="Select Customer"
+            label={TABLE_LABELS.CUSTOMER_SELECT}
             onChange={(e) => setSelectedCustomer(e.target.value)}
             displayEmpty
             sx={styles.select}
@@ -63,15 +64,17 @@ const RewardsTable = ({ rewards, transactions }) => {
             <Card elevation={3} sx={styles.card}>
               <CardContent>
                 <Typography variant="h5" sx={styles.cardTitle}>
-                  Monthly Rewards Summary
+                  {TABLE_LABELS.MONTHLY_SUMMARY}
                 </Typography>
                 <TableContainer>
                   <Table sx={{ minWidth: 650 }} aria-label="rewards table">
                     <TableHead>
                       <TableRow sx={styles.tableHeader}>
-                        <TableCell sx={styles.tableHeaderCell}>Month</TableCell>
+                        <TableCell sx={styles.tableHeaderCell}>
+                          {TABLE_LABELS.MONTH}
+                        </TableCell>
                         <TableCell align="right" sx={styles.tableHeaderCell}>
-                          Rewards Points
+                          {TABLE_LABELS.REWARDS_POINTS}
                         </TableCell>
                       </TableRow>
                     </TableHead>
@@ -88,7 +91,7 @@ const RewardsTable = ({ rewards, transactions }) => {
                       )}
                       <TableRow sx={styles.totalRow}>
                         <TableCell sx={styles.totalCell}>
-                          Total Rewards :
+                          {TABLE_LABELS.TOTAL_REWARDS}:
                         </TableCell>
                         <TableCell align="right" sx={styles.totalCell}>
                           {rewards[selectedCustomer].total}
@@ -103,18 +106,20 @@ const RewardsTable = ({ rewards, transactions }) => {
             <Card elevation={3} sx={styles.card}>
               <CardContent>
                 <Typography variant="h5" sx={styles.cardTitle}>
-                  Transaction History
+                  {TABLE_LABELS.TRANSACTION_HISTORY}
                 </Typography>
                 <TableContainer>
                   <Table sx={{ minWidth: 650 }} aria-label="transactions table">
                     <TableHead>
                       <TableRow sx={styles.tableHeader}>
                         <TableCell sx={styles.tableHeaderCell}>
-                          Transaction ID
+                          {TABLE_LABELS.TRANSACTION_ID}
                         </TableCell>
-                        <TableCell sx={styles.tableHeaderCell}>Date</TableCell>
+                        <TableCell sx={styles.tableHeaderCell}>
+                          {TABLE_LABELS.DATE}
+                        </TableCell>
                         <TableCell align="right" sx={styles.tableHeaderCell}>
-                          Amount ($)
+                          {TABLE_LABELS.AMOUNT}
                         </TableCell>
                       </TableRow>
                     </TableHead>
