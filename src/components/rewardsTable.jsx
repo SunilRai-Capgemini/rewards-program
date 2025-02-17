@@ -28,6 +28,11 @@ const RewardsTable = ({ rewards, transactions }) => {
     );
   }, [transactions, selectedCustomer]);
 
+  const handleCustomerChange = (e) => {
+    const newValue = e.target.value;
+    setSelectedCustomer(newValue);
+  };
+
   return (
     <div style={styles.mainContainer}>
       <Container maxWidth="md" sx={styles.contentContainer}>
@@ -43,7 +48,7 @@ const RewardsTable = ({ rewards, transactions }) => {
             id="customer-select"
             value={selectedCustomer}
             label={TABLE_LABELS.CUSTOMER_SELECT}
-            onChange={(e) => setSelectedCustomer(e.target.value)}
+            onChange={handleCustomerChange}
             displayEmpty
             sx={styles.select}
           >

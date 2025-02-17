@@ -48,13 +48,13 @@ function App() {
 
   logger.debug({ rewards }, "Rendering rewards component");
   return (
-    <div>
+    <>
       {!rewards ? (
         <p>Loading rewards points...</p>
       ) : (
         <RewardsTable rewards={rewards} transactions={mockData} />
       )}
-    </div>
+    </>
   );
 }
 
