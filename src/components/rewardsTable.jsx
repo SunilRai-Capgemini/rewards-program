@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -28,10 +28,10 @@ const RewardsTable = ({ rewards, transactions }) => {
     );
   }, [transactions, selectedCustomer]);
 
-  const handleCustomerChange = (e) => {
+  const handleCustomerChange = useCallback((e) => {
     const newValue = e.target.value;
     setSelectedCustomer(newValue);
-  };
+  }, []);
 
   return (
     <div style={styles.mainContainer}>
